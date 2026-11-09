@@ -25,6 +25,10 @@ Hugging Face Hub. We ask whether benchmark contamination is *inherited* along th
 | `phase1_audit.py` | Lineage coverage audit and h² sensitivity on well-documented subsets |
 | `phase2_decouple.py` | Separates contamination from capability: residual proxy, capability covariate, genetic correlation, placebo control |
 | `phase3_merges.py` | Merge additivity on each leaderboard, per-task merge bonus, fine-tune reference, v1-vs-v2 comparison adjusted for parent rank |
+| `phase4_select.py` | Picks models for the memorisation test and records each one's proxies, including inflation predicted from its relatives only |
+| `phase4_eval.py` | Runs models on original GSM8K questions vs GSM-Symbolic / GSM-Plus versions of the same questions (GPU) |
+| `phase4_colab.ipynb` | Colab / Kaggle notebook that runs `phase4_eval.py` with vLLM and saves to Google Drive |
+| `phase4_analyze.py` | Memorisation drop per model and its correlation with each inflation proxy |
 
 ## Run (Windows)
 
@@ -38,6 +42,21 @@ set HF_TOKEN=hf_...            (a Hugging Face read token)
 .venv\Scripts\python phase2_decouple.py --data out_phase1/data --out out_phase1
 .venv\Scripts\python phase3_merges.py --data out_phase1/data --out out_phase1
 ```
+
+### Phase 4 (needs a GPU)
+
+The memorisation test runs models, so it needs a GPU. Model selection is already in
+`out_phase1/phase4/models.csv` (10 models up to 2B, 26 up to 4B, 106 up to 8B).
+
+- **Colab (recommended):** open `phase4_colab.ipynb` in Colab, set *Runtime → T4 GPU*, add
+  `HF_TOKEN` under Secrets, then *Run all*. Results go to Google Drive and the run resumes after a
+  disconnect.
+- **Local GPU (Windows, slower):**
+  ```
+  .venv\Scripts\python -m pip install -r requirements-eval.txt --extra-index-url https://download.pytorch.org/whl/cu121
+  .venv\Scripts\python phase4_eval.py --tiers local --backend hf --batch 8
+  .venv\Scripts\python phase4_analyze.py
+  ```
 
 Part 1 resumes from its cache in `<out>/data` and can take up to an hour on a fresh run because of
 Hub rate limits. Parts 2 and the audit run offline in a few minutes.

@@ -6,6 +6,7 @@ __pycache__/
 # local scratch: duplicate extraction of the scripts, synthetic smoke-test output
 ada_contam/
 out_mock/
+out_phase4_smoke/
 
 # run logs (machine-specific paths, warnings)
 *_log.txt

@@ -1,0 +1,6 @@
+# Phase 4 (model evaluation) only, on top of requirements.txt.
+# Local Windows GPU:  pip install -r requirements-eval.txt --extra-index-url https://download.pytorch.org/whl/cu121
+# Colab / Kaggle: torch is preinstalled; add vllm for speed (Linux only):  pip install vllm
+torch==2.5.1
+transformers==4.46.3
+accelerate==1.1.1
