@@ -24,6 +24,7 @@ Hugging Face Hub. We ask whether benchmark contamination is *inherited* along th
 | `part2_analysis.py` | Heritability (REML, two kinship models, permutation test), inheritance mode, lineage-only prediction, figures 08–16 |
 | `phase1_audit.py` | Lineage coverage audit and h² sensitivity on well-documented subsets |
 | `phase2_decouple.py` | Separates contamination from capability: residual proxy, capability covariate, genetic correlation, placebo control |
+| `phase3_merges.py` | Merge additivity on each leaderboard, per-task merge bonus, fine-tune reference, v1-vs-v2 comparison adjusted for parent rank |
 
 ## Run (Windows)
 
@@ -35,6 +36,7 @@ set HF_TOKEN=hf_...            (a Hugging Face read token)
 .venv\Scripts\python part2_analysis.py --data out_phase1/data --out out_phase1
 .venv\Scripts\python phase1_audit.py --data out_phase1/data --out out_phase1
 .venv\Scripts\python phase2_decouple.py --data out_phase1/data --out out_phase1
+.venv\Scripts\python phase3_merges.py --data out_phase1/data --out out_phase1
 ```
 
 Part 1 resumes from its cache in `<out>/data` and can take up to an hour on a fresh run because of
@@ -44,7 +46,8 @@ Hub rate limits. Parts 2 and the audit run offline in a few minutes.
 
 - `out/` — first full run (baseline).
 - `out_phase1/` — current results: renamed repos matched between v1 and v2 (panel 394 → 405) and
-  lineage fixes. `phase1/` holds the coverage audit, `phase2/` the decoupling tests.
+  lineage fixes. `phase1/` holds the coverage audit, `phase2/` the decoupling tests, `phase3/`
+  the merge-additivity tests (including the figure `12_merge_additivity.png`).
 
 ## Key results so far (clonal kinship, the conservative model)
 
@@ -55,6 +58,9 @@ Hub rate limits. Parts 2 and the audit run offline in a few minutes.
 | Is it just capability? | Residual inflation is uncorrelated with capability (ρ = 0.02) and still heritable (h² = 0.62); genetic correlation with capability r_g = −0.14 [−0.38, 0.34] |
 | Placebo: are ordinary skill gaps as heritable? | No. 0 of 20 clean-vs-clean averaged gaps reach the contamination gap's h² (placebo median 0.22) |
 | Does family predict inflation? | CV R² 0.23 with the pedigree vs 0.17 covariates only; detector AUC 0.71 |
+| Are merges additive? | Yes, roughly: a typical merge sits at its parents' average on both leaderboards (median difference +0.5 on v1, +0.2 on v2; slope 0.91 / 0.88) |
+| Does merging compound contamination? | Weakly. At matched parent rank and without broken merges, merges keep +2.3 [0.6, 4.0] percentile points more of their parents' standing on contaminated v1 than on clean v2 (p = 0.008). The larger raw gap (+5.6) is mostly 23 broken merges that collapse on v2's generative tasks. |
+| Is the merge gain concentrated on GSM8K / TruthfulQA? | No clear evidence: TruthfulQA +0.9 [−0.0, 1.7], GSM8K −0.3 [−1.7, 1.0] |
 
 Lineage note: on the v2 leaderboard, the "Base Model" of most merges is the model itself tagged
 "(Merge)". Those are self-references, not parents, and are excluded.
