@@ -1,0 +1,13 @@
+kinship,test,h2,ci_lo,ci_hi,p_lrt,n
+clonal,raw gap (Part 2 proxy),0.5212,0.28,0.72,6.419971704439158e-07,405
+clonal,raw gap + capability covariate,0.6991,0.5,0.83,1.4983205227602696e-11,405
+clonal,residual gap,0.6208,0.39,0.79,1.6836172179048132e-08,405
+clonal,capability (v2 rank),0.5488,0.29,0.75,7.77048400821107e-06,405
+clonal,residual gap: math (GSM8K vs MATH),0.441,0.16,0.67,0.000968124089540255,405
+clonal,residual gap: knowledge (MMLU vs MMLU-Pro),0.3267,0.02,0.65,0.015399764037829633,405
+diploid,raw gap (Part 2 proxy),0.7858,0.45,0.999,7.189585804548349e-06,405
+diploid,raw gap + capability covariate,0.8817,0.6,0.999,5.093758862712636e-08,405
+diploid,residual gap,0.8198,0.51,0.999,9.898613703702693e-07,405
+diploid,capability (v2 rank),0.943,0.52,0.999,0.00010930461815419769,405
+diploid,residual gap: math (GSM8K vs MATH),0.9386,0.58,0.999,1.9848515031214976e-05,405
+diploid,residual gap: knowledge (MMLU vs MMLU-Pro),0.8117,0.26,0.999,0.0024595455716593063,405

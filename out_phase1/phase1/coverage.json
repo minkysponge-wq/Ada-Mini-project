@@ -1,0 +1,38 @@
+{
+  "leaderboard_models": 10912,
+  "v1_models": 6820,
+  "v2_models": 4497,
+  "panel_models": 405,
+  "renames_confirmed": 11,
+  "renames_candidates": 29,
+  "hub_status_leaderboard": {
+    "hub page ok": 8855,
+    "hub page missing/gated": 2057
+  },
+  "lineage_source_leaderboard": {
+    "no lineage (founder or undocumented)": 6943,
+    "relation tags": 3814,
+    "card base_model only": 112,
+    "leaderboard column only": 43
+  },
+  "lineage_source_panel": {
+    "no lineage (founder or undocumented)": 306,
+    "relation tags": 99
+  },
+  "panel_with_any_parent": 99,
+  "distinct_parents_referenced": 4214,
+  "parents_hub_ok": 3845,
+  "parents_hub_missing_or_gated": 368,
+  "parents_not_fetched_depth_limit": 1,
+  "relation_counts": {
+    "merge": 8535,
+    "finetune": 2679,
+    "adapter": 192,
+    "quantized": 135
+  },
+  "panel_families": 324,
+  "panel_families_with_2plus": 27,
+  "panel_models_in_2plus_families": 108,
+  "panel_models_with_a_relative_in_panel": 127,
+  "related_pairs_in_panel": 569
+}

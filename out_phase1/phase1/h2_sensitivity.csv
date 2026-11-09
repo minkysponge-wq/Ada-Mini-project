@@ -1,0 +1,13 @@
+subset,n,kinship,trait,h2,ci_lo,ci_hi,p_lrt
+All panel models,405,clonal,inflation,0.5212,0.28,0.72,6.419971704439132e-07
+All panel models,405,clonal,v2_pct,0.5488,0.29,0.75,7.770484008210838e-06
+All panel models,405,diploid,inflation,0.7858,0.45,0.999,7.189585804548291e-06
+All panel models,405,diploid,v2_pct,0.943,0.52,0.999,0.00010930461815419769
+Families with 2+ panel members,108,clonal,inflation,0.5386,0.28,0.77,3.5902642191620853e-06
+Families with 2+ panel members,108,clonal,v2_pct,0.208,0.01,0.51,0.017712765614813497
+Families with 2+ panel members,108,diploid,inflation,0.8616,0.48,0.999,3.3753081636346866e-05
+Families with 2+ panel members,108,diploid,v2_pct,0.6551,0.05,0.999,0.015508425542538453
+Models with a relative in the panel,127,clonal,inflation,0.5152,0.27,0.74,1.440914739829355e-06
+Models with a relative in the panel,127,clonal,v2_pct,0.2031,0.02,0.48,0.01728510453468849
+Models with a relative in the panel,127,diploid,inflation,0.7696,0.41,0.999,3.188690161767855e-05
+Models with a relative in the panel,127,diploid,v2_pct,0.5656,0.03,0.999,0.018258541726156576

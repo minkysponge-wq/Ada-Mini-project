@@ -1,0 +1,144 @@
+{
+  "n_panel": 405,
+  "primary_kinship": "clonal",
+  "A_regression_to_mean": {
+    "corr_raw_gap_vs_capability": -0.2942596593255025,
+    "corr_residual_gap_vs_capability": 0.01687268891092722
+  },
+  "B_h2_tests": [
+    {
+      "kinship": "clonal",
+      "test": "raw gap (Part 2 proxy)",
+      "h2": 0.5212,
+      "ci_lo": 0.28,
+      "ci_hi": 0.72,
+      "p_lrt": 6.419971704439158e-07,
+      "n": 405
+    },
+    {
+      "kinship": "clonal",
+      "test": "raw gap + capability covariate",
+      "h2": 0.6991,
+      "ci_lo": 0.5,
+      "ci_hi": 0.83,
+      "p_lrt": 1.4983205227602696e-11,
+      "n": 405
+    },
+    {
+      "kinship": "clonal",
+      "test": "residual gap",
+      "h2": 0.6208,
+      "ci_lo": 0.39,
+      "ci_hi": 0.79,
+      "p_lrt": 1.6836172179048132e-08,
+      "n": 405
+    },
+    {
+      "kinship": "clonal",
+      "test": "capability (v2 rank)",
+      "h2": 0.5488,
+      "ci_lo": 0.29,
+      "ci_hi": 0.75,
+      "p_lrt": 7.77048400821107e-06,
+      "n": 405
+    },
+    {
+      "kinship": "clonal",
+      "test": "residual gap: math (GSM8K vs MATH)",
+      "h2": 0.441,
+      "ci_lo": 0.16,
+      "ci_hi": 0.67,
+      "p_lrt": 0.000968124089540255,
+      "n": 405
+    },
+    {
+      "kinship": "clonal",
+      "test": "residual gap: knowledge (MMLU vs MMLU-Pro)",
+      "h2": 0.3267,
+      "ci_lo": 0.02,
+      "ci_hi": 0.65,
+      "p_lrt": 0.015399764037829633,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "raw gap (Part 2 proxy)",
+      "h2": 0.7858,
+      "ci_lo": 0.45,
+      "ci_hi": 0.999,
+      "p_lrt": 7.189585804548349e-06,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "raw gap + capability covariate",
+      "h2": 0.8817,
+      "ci_lo": 0.6,
+      "ci_hi": 0.999,
+      "p_lrt": 5.093758862712636e-08,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "residual gap",
+      "h2": 0.8198,
+      "ci_lo": 0.51,
+      "ci_hi": 0.999,
+      "p_lrt": 9.898613703702693e-07,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "capability (v2 rank)",
+      "h2": 0.943,
+      "ci_lo": 0.52,
+      "ci_hi": 0.999,
+      "p_lrt": 0.00010930461815419769,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "residual gap: math (GSM8K vs MATH)",
+      "h2": 0.9386,
+      "ci_lo": 0.58,
+      "ci_hi": 0.999,
+      "p_lrt": 1.9848515031214976e-05,
+      "n": 405
+    },
+    {
+      "kinship": "diploid",
+      "test": "residual gap: knowledge (MMLU vs MMLU-Pro)",
+      "h2": 0.8117,
+      "ci_lo": 0.26,
+      "ci_hi": 0.999,
+      "p_lrt": 0.0024595455716593063,
+      "n": 405
+    }
+  ],
+  "C_genetic_correlation": {
+    "rg": -0.14,
+    "ci95": [
+      -0.38,
+      0.34
+    ],
+    "p_rg_eq_0": 0.5168524332657208
+  },
+  "D_placebo": {
+    "placebo_h2_median": 0.2566785234820159,
+    "placebo_h2_max": 0.5298030635737733,
+    "n_placebo_pairs": 30,
+    "placebo_avg_h2_median": 0.21684534956255397,
+    "placebo_avg_h2_max": 0.37273210427345227,
+    "n_placebo_avg": 20,
+    "contaminated_h2": {
+      "overall": 0.6207609466412598,
+      "math (GSM8K vs MATH)": 0.4409705485697284,
+      "knowledge (MMLU vs MMLU-Pro)": 0.3267001616946294
+    },
+    "share_of_placebos_at_or_above": {
+      "overall": 0.0,
+      "math (GSM8K vs MATH)": 0.13333333333333333,
+      "knowledge (MMLU vs MMLU-Pro)": 0.3333333333333333
+    }
+  }
+}

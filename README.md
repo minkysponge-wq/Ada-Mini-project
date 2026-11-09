@@ -23,6 +23,7 @@ Hugging Face Hub. We ask whether benchmark contamination is *inherited* along th
 | `part1_pedigree.py` | Downloads v1/v2 scores and Hub lineage, builds the pedigree and the v1∩v2 panel, figures 01–07 |
 | `part2_analysis.py` | Heritability (REML, two kinship models, permutation test), inheritance mode, lineage-only prediction, figures 08–16 |
 | `phase1_audit.py` | Lineage coverage audit and h² sensitivity on well-documented subsets |
+| `phase2_decouple.py` | Separates contamination from capability: residual proxy, capability covariate, genetic correlation, placebo control |
 
 ## Run (Windows)
 
@@ -33,6 +34,7 @@ set HF_TOKEN=hf_...            (a Hugging Face read token)
 .venv\Scripts\python part1_pedigree.py --out out_phase1
 .venv\Scripts\python part2_analysis.py --data out_phase1/data --out out_phase1
 .venv\Scripts\python phase1_audit.py --data out_phase1/data --out out_phase1
+.venv\Scripts\python phase2_decouple.py --data out_phase1/data --out out_phase1
 ```
 
 Part 1 resumes from its cache in `<out>/data` and can take up to an hour on a fresh run because of
@@ -41,5 +43,18 @@ Hub rate limits. Parts 2 and the audit run offline in a few minutes.
 ## Outputs
 
 - `out/` — first full run (baseline).
-- `out_phase1/` — Phase 1 run: renamed repos matched between v1 and v2, and lineage fixes
-  (`(Merge)` suffixes stripped from leaderboard parent ids, missing parents of cached models fetched).
+- `out_phase1/` — current results: renamed repos matched between v1 and v2 (panel 394 → 405) and
+  lineage fixes. `phase1/` holds the coverage audit, `phase2/` the decoupling tests.
+
+## Key results so far (clonal kinship, the conservative model)
+
+| Question | Result |
+|---|---|
+| Is inflation heritable? | h² = 0.52 [0.28, 0.72], permutation p = 0.015 |
+| Is the lineage data good enough? | 99 of 405 panel models (24%) have documented parents; 127 have a relative in the panel (569 related pairs). Restricted to those, h² of inflation stays 0.52 while capability drops to 0.20. |
+| Is it just capability? | Residual inflation is uncorrelated with capability (ρ = 0.02) and still heritable (h² = 0.62); genetic correlation with capability r_g = −0.14 [−0.38, 0.34] |
+| Placebo: are ordinary skill gaps as heritable? | No. 0 of 20 clean-vs-clean averaged gaps reach the contamination gap's h² (placebo median 0.22) |
+| Does family predict inflation? | CV R² 0.23 with the pedigree vs 0.17 covariates only; detector AUC 0.71 |
+
+Lineage note: on the v2 leaderboard, the "Base Model" of most merges is the model itself tagged
+"(Merge)". Those are self-references, not parents, and are excluded.

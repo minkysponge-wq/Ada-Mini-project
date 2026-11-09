@@ -1,0 +1,131 @@
+{
+  "n_panel": 405,
+  "covariates": [
+    "intercept",
+    "log_params",
+    "year_miss",
+    "year",
+    "architecture=MistralForCausalLM",
+    "architecture=MixtralForCausalLM",
+    "architecture=Qwen2ForCausalLM",
+    "architecture=GPTNeoXForCausalLM",
+    "architecture=GemmaForCausalLM",
+    "architecture=GPT2LMHeadModel",
+    "architecture=StableLmForCausalLM",
+    "type=\ud83d\udcac chat models (RLHF, DPO, IFT, ...)",
+    "type=\ud83d\udfe2 pretrained",
+    "type=\ud83e\udd1d base merges and moerges",
+    "type=\ud83d\udfe9 continuously pretrained",
+    "type=\u2753 other",
+    "moe"
+  ],
+  "heritability": [
+    {
+      "trait": "inflation",
+      "kinship": "diploid",
+      "h2": 0.7858,
+      "ci_lo": 0.45,
+      "ci_hi": 0.999,
+      "p_lrt": 0.0,
+      "n": 405
+    },
+    {
+      "trait": "infl_math",
+      "kinship": "diploid",
+      "h2": 0.9408,
+      "ci_lo": 0.55,
+      "ci_hi": 0.999,
+      "p_lrt": 0.0001,
+      "n": 405
+    },
+    {
+      "trait": "infl_knowledge",
+      "kinship": "diploid",
+      "h2": 0.8583,
+      "ci_lo": 0.28,
+      "ci_hi": 0.999,
+      "p_lrt": 0.0033,
+      "n": 405
+    },
+    {
+      "trait": "v2_pct",
+      "kinship": "diploid",
+      "h2": 0.943,
+      "ci_lo": 0.52,
+      "ci_hi": 0.999,
+      "p_lrt": 0.0001,
+      "n": 405
+    },
+    {
+      "trait": "inflation",
+      "kinship": "clonal",
+      "h2": 0.5212,
+      "ci_lo": 0.28,
+      "ci_hi": 0.72,
+      "p_lrt": 0.0,
+      "n": 405
+    },
+    {
+      "trait": "infl_math",
+      "kinship": "clonal",
+      "h2": 0.3924,
+      "ci_lo": 0.09,
+      "ci_hi": 0.65,
+      "p_lrt": 0.0047,
+      "n": 405
+    },
+    {
+      "trait": "infl_knowledge",
+      "kinship": "clonal",
+      "h2": 0.3202,
+      "ci_lo": 0.0,
+      "ci_hi": 0.67,
+      "p_lrt": 0.0343,
+      "n": 405
+    },
+    {
+      "trait": "v2_pct",
+      "kinship": "clonal",
+      "h2": 0.5488,
+      "ci_lo": 0.29,
+      "ci_hi": 0.75,
+      "p_lrt": 0.0,
+      "n": 405
+    }
+  ],
+  "permutation_p_inflation": 0.014925373134328358,
+  "inheritance": {
+    "midparent_finetune": {
+      "n": 53,
+      "slope": 0.2349806474170284,
+      "slope_se": 0.17035495687019317,
+      "intercept": -4.409095252381927,
+      "r": 0.18964381538768776,
+      "p": 0.1738028687793897
+    },
+    "generation": {
+      "slope": 0.6609879392005418,
+      "p": 0.02834417604899094,
+      "mean_step_change": -3.32010582010582,
+      "step_p": 0.09639698488410678
+    }
+  },
+  "prediction": {
+    "cv_r2": {
+      "Covariates only (size, arch, date, type)": 0.17230611638960192,
+      "Family mean (founder)": 0.08426134135843233,
+      "Pedigree BLUP + covariates": 0.22684772062224856
+    },
+    "cv_spearman": {
+      "Covariates only (size, arch, date, type)": 0.3499460937249344,
+      "Family mean (founder)": 0.13445050632911265,
+      "Pedigree BLUP + covariates": 0.4265851308286419
+    },
+    "detector_auc": {
+      "Covariates only (size, arch, date, type)": 0.6614158497343411,
+      "Family mean (founder)": 0.5776584599266632,
+      "Pedigree BLUP + covariates": 0.7053431115767419
+    },
+    "subproxy_spearman": 0.08786983436882896
+  }
+}
