@@ -1,0 +1,9 @@
+pandas
+numpy
+scipy
+scikit-learn
+networkx
+matplotlib
+datasets
+huggingface_hub>=0.24
+requests

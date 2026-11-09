@@ -1,0 +1,25 @@
+ADA Jackfruit - how to run (Windows cmd, inside the ada_contam folder)
+
+ONE-TIME SETUP
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -r requirements.txt
+
+EVERY TIME YOU OPEN A NEW TERMINAL
+  cd "C:\College\ADA mini porj\ada_contam"
+  .venv\Scripts\activate
+  set HF_TOKEN=hf_YOURTOKEN          (no < > and no quotes)
+
+PART 1  (downloads data + builds the family tree; resumes if stopped)
+  python part1_pedigree.py --out out
+  -> finished when you see: [done] figures in out/figs/
+  -> outputs: out\summary_part1.json, out\figs\01-07*.png, out\data\*.csv
+
+PARTS 2-4  (offline, about 1-5 minutes; run only after Part 1 says [done])
+  python part2_analysis.py --data out/data --out out
+  -> outputs: out\summary_part2.json, out\heritability.csv, out\figs\08-16*.png
+
+SEND BACK FOR THE PPT
+  out\summary_part1.json, out\summary_part2.json, everything in out\figs\
+
+If Part 2 is slow or runs out of memory:  add  --max-panel 3000

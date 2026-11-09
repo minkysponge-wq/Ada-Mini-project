@@ -1,0 +1,9 @@
+{
+  "nodes": 13020,
+  "edges": 10160,
+  "panel": 394,
+  "panel_merges": 36,
+  "max_generation": 132,
+  "families_in_panel": 314,
+  "spearman_v1_v2": 0.8415740250608157
+}
