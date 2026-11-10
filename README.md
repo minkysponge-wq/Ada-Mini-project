@@ -81,5 +81,18 @@ Hub rate limits. Parts 2 and the audit run offline in a few minutes.
 | Does merging compound contamination? | Weakly. At matched parent rank and without broken merges, merges keep +2.3 [0.6, 4.0] percentile points more of their parents' standing on contaminated v1 than on clean v2 (p = 0.008). The larger raw gap (+5.6) is mostly 23 broken merges that collapse on v2's generative tasks. |
 | Is the merge gain concentrated on GSM8K / TruthfulQA? | No clear evidence: TruthfulQA +0.9 [−0.0, 1.7], GSM8K −0.3 [−1.7, 1.0] |
 
+### Phase 4: memorisation test (pilot, 5 small models on a local RTX 4050)
+
+Each model answered 1,400 paired items: original GSM8K questions and the same questions with new
+numbers (GSM-Symbolic, GSM-Plus numerical substitution) or reworded (GSM-Plus paraphrase).
+Models: Qwen2-0.5B, Qwen1.5-0.5B, TinyLlama-Cinder-Agent, Qwen2-1.5B, StableLM-2-1.6B (856 of 1,400 items).
+
+| Question | Result |
+|---|---|
+| Does the harness measure what the leaderboard measures? | Yes: our original-question accuracy ranks the models like the leaderboard's GSM8K (Spearman 0.90) |
+| Do models do worse when only the numbers change? | Yes, every model: 8–15 points lower on re-numbered questions (mean 7.8 points over symbolic and number-substitution); bootstrap CI excludes 0 for 4 of 5 |
+| Is that just harder wording? | No: reworded questions with the original numbers cost only 1 point on average, so the drop is tied to the specific numbers, which is the memorisation pattern |
+| Does the inflation proxy predict which models memorise more? | Not testable yet: with 5 models no correlation is significant (all p > 0.13). About 20+ models with relatives in the panel are needed; `phase4_select.py` lists 47 such models in the 7–8B tier for a Kaggle run |
+
 Lineage note: on the v2 leaderboard, the "Base Model" of most merges is the model itself tagged
 "(Merge)". Those are self-references, not parents, and are excluded.

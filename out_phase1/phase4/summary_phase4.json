@@ -1,0 +1,105 @@
+{
+  "n_models": 5,
+  "mean_acc_orig": 0.3355757575757576,
+  "mean_drop": 0.07810147564180311,
+  "mean_drop_paraphrase": 0.010493638676844785,
+  "harness_check_spearman_vs_leaderboard_gsm8k": 0.8999999999999998,
+  "proxy_validation": [
+    {
+      "proxy": "infl_math",
+      "target": "drop",
+      "n": 5,
+      "spearman": -0.6,
+      "p_perm": 0.3589,
+      "partial_spearman_given_acc": -0.6124
+    },
+    {
+      "proxy": "infl_math",
+      "target": "drop_rel",
+      "n": 5,
+      "spearman": -0.2,
+      "p_perm": 0.7814,
+      "partial_spearman_given_acc": -0.6124
+    },
+    {
+      "proxy": "infl_math",
+      "target": "drop_paraphrase",
+      "n": 5,
+      "spearman": 0.2052,
+      "p_perm": 0.7686,
+      "partial_spearman_given_acc": 0.1541
+    },
+    {
+      "proxy": "inflation",
+      "target": "drop",
+      "n": 5,
+      "spearman": 0.1,
+      "p_perm": 0.9452,
+      "partial_spearman_given_acc": -0.1048
+    },
+    {
+      "proxy": "inflation",
+      "target": "drop_rel",
+      "n": 5,
+      "spearman": -0.3,
+      "p_perm": 0.6789,
+      "partial_spearman_given_acc": -0.1048
+    },
+    {
+      "proxy": "inflation",
+      "target": "drop_paraphrase",
+      "n": 5,
+      "spearman": 0.3591,
+      "p_perm": 0.6389,
+      "partial_spearman_given_acc": 0.4974
+    },
+    {
+      "proxy": "resid_inflation",
+      "target": "drop",
+      "n": 5,
+      "spearman": 0.3,
+      "p_perm": 0.6917,
+      "partial_spearman_given_acc": 0.3015
+    },
+    {
+      "proxy": "resid_inflation",
+      "target": "drop_rel",
+      "n": 5,
+      "spearman": 0.1,
+      "p_perm": 0.953,
+      "partial_spearman_given_acc": 0.3015
+    },
+    {
+      "proxy": "resid_inflation",
+      "target": "drop_paraphrase",
+      "n": 5,
+      "spearman": 0.6669,
+      "p_perm": 0.2629,
+      "partial_spearman_given_acc": 0.737
+    },
+    {
+      "proxy": "pedigree_pred",
+      "target": "drop",
+      "n": 5,
+      "spearman": -0.2,
+      "p_perm": 0.7844,
+      "partial_spearman_given_acc": 0.25
+    },
+    {
+      "proxy": "pedigree_pred",
+      "target": "drop_rel",
+      "n": 5,
+      "spearman": 0.6,
+      "p_perm": 0.3481,
+      "partial_spearman_given_acc": 0.25
+    },
+    {
+      "proxy": "pedigree_pred",
+      "target": "drop_paraphrase",
+      "n": 5,
+      "spearman": 0.8208,
+      "p_perm": 0.1322,
+      "partial_spearman_given_acc": 0.8357
+    }
+  ]
+}
