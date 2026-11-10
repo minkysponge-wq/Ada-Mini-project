@@ -1,0 +1,25 @@
+check,group,proxy,n,h2,ci_lo,ci_hi,p_lrt
+baseline,all,raw,405,0.521,0.28,0.72,6.419971704439158e-07
+baseline,all,residual (cubic),405,0.621,0.39,0.79,1.6836172179048132e-08
+baseline,all,residual (linear),405,0.58,0.35,0.76,2.599012498475039e-08
+baseline,all,residual (quintic),405,0.686,0.45,0.84,1.0213105004595308e-08
+kinship: diploid,kinship,raw,405,0.786,0.45,0.999,7.189585804548349e-06
+kinship: diploid,kinship,residual (cubic),405,0.82,0.51,0.999,9.898613703702693e-07
+without merges,sample,raw,380,0.502,0.21,0.73,4.173607492578556e-05
+without merges,sample,residual (cubic),380,0.607,0.32,0.79,3.1703958347764646e-06
+without MoE models,sample,raw,374,0.461,0.2,0.68,1.785066337886551e-05
+without MoE models,sample,residual (cubic),374,0.584,0.33,0.77,4.5408790554680517e-07
+size <= median,sample,raw,203,0.526,0.25,0.75,2.3277979342055058e-05
+size <= median,sample,residual (cubic),203,0.567,0.3,0.77,2.1213971714970797e-06
+size > median,sample,raw,200,0.533,0.1,0.82,0.005462518451762901
+size > median,sample,residual (cubic),200,0.701,0.27,0.89,0.0015930418367637604
+drop family Mistral-7B-v0.1,leave-one-family-out,raw,385,0.571,0.29,0.78,1.3862833298172109e-05
+drop family Mistral-7B-v0.1,leave-one-family-out,residual (cubic),385,0.707,0.44,0.87,9.880925294048051e-07
+drop family Meta-Llama-3-8B,leave-one-family-out,raw,389,0.572,0.32,0.76,4.156689524392427e-07
+drop family Meta-Llama-3-8B,leave-one-family-out,residual (cubic),389,0.643,0.4,0.81,1.6115553956824435e-08
+drop family Marcoro14-7B-slerp,leave-one-family-out,raw,397,0.47,0.19,0.7,9.088553645322415e-05
+drop family Marcoro14-7B-slerp,leave-one-family-out,residual (cubic),397,0.589,0.31,0.78,4.404902426856794e-06
+drop family Meta-Llama-3-8B-Instruct,leave-one-family-out,raw,399,0.568,0.32,0.76,4.097805375592443e-07
+drop family Meta-Llama-3-8B-Instruct,leave-one-family-out,residual (cubic),399,0.681,0.45,0.83,2.3139028691508137e-09
+drop family Mixtral-8x7B-v0.1,leave-one-family-out,raw,399,0.479,0.22,0.69,6.966805438093146e-06
+drop family Mixtral-8x7B-v0.1,leave-one-family-out,residual (cubic),399,0.578,0.32,0.76,3.106696504877304e-07

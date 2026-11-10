@@ -1,0 +1,55 @@
+{
+  "n_checks": 11,
+  "baseline": [
+    {
+      "check": "baseline",
+      "group": "all",
+      "proxy": "raw",
+      "n": 405,
+      "h2": 0.521,
+      "ci_lo": 0.28,
+      "ci_hi": 0.72,
+      "p_lrt": 6.419971704439158e-07
+    },
+    {
+      "check": "baseline",
+      "group": "all",
+      "proxy": "residual (cubic)",
+      "n": 405,
+      "h2": 0.621,
+      "ci_lo": 0.39,
+      "ci_hi": 0.79,
+      "p_lrt": 1.6836172179048132e-08
+    },
+    {
+      "check": "baseline",
+      "group": "all",
+      "proxy": "residual (linear)",
+      "n": 405,
+      "h2": 0.58,
+      "ci_lo": 0.35,
+      "ci_hi": 0.76,
+      "p_lrt": 2.599012498475039e-08
+    },
+    {
+      "check": "baseline",
+      "group": "all",
+      "proxy": "residual (quintic)",
+      "n": 405,
+      "h2": 0.686,
+      "ci_lo": 0.45,
+      "ci_hi": 0.84,
+      "p_lrt": 1.0213105004595308e-08
+    }
+  ],
+  "raw_h2_range": [
+    0.461,
+    0.786
+  ],
+  "residual_h2_range": [
+    0.567,
+    0.82
+  ],
+  "n_significant_p05": 24,
+  "n_fits": 24
+}

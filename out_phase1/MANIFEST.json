@@ -1,0 +1,129 @@
+{
+  "created_utc": "2026-11-10T17:27:55+00:00",
+  "python": "3.10.11",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scipy": "1.15.3",
+    "networkx": "3.4.2",
+    "matplotlib": "3.10.9",
+    "huggingface_hub": "0.36.2",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.46.3"
+  },
+  "files": {
+    "heritability.csv": {
+      "sha256": "7240901b7018cc5296d5e4997117eda40bd7f17ddf2f2c84c2c059554e6a7ad4",
+      "bytes": 632
+    },
+    "summary_part1.json": {
+      "sha256": "a7d5ee79d52cc5ecd1f30ddffff8e62b74bff7efa01a415588fb846b8526805c",
+      "bytes": 177
+    },
+    "summary_part2.json": {
+      "sha256": "7b94efa544cde3b667e573bc7c8da804ee6bdd6ba4ab63ec864017e0c1aa69d5",
+      "bytes": 3254
+    },
+    "data/edges.csv": {
+      "sha256": "8fe5c5d40c7f501a44fcee6da51dd49223c6316aad809f2e0ddcdb3523c9edd5",
+      "bytes": 848612
+    },
+    "data/id_aliases.csv": {
+      "sha256": "dfd56d0113c4bf98d20c121f55a10bdb0612386f53322666e467d4dd6897c870",
+      "bytes": 2452
+    },
+    "data/nodes.csv": {
+      "sha256": "338d3ab2a42d94aee58cb9a85ccec112a1ed33a71f77177d75f6b604b0c6de3f",
+      "bytes": 3073015
+    },
+    "data/panel.csv": {
+      "sha256": "f95f7f4e4525ca55418d79be47315abc1085898590a863502144acc9a5c9cf7f",
+      "bytes": 218754
+    },
+    "data/v1_scores.csv": {
+      "sha256": "029e696f0daf01bc2bc1abceb067d92f625c3efd6ad7fc36cc9036975510ec77",
+      "bytes": 1171725
+    },
+    "data/v2_scores.csv": {
+      "sha256": "400deed4b69a9c6110f6a0450e6f165a3c3ae6ae745a67bfdc7567a7fb93b103",
+      "bytes": 1384911
+    },
+    "phase1/coverage.json": {
+      "sha256": "e87155c997d90170d4e099733f118eeedae5157ddbcfd0ca60d6bd162fbed08f",
+      "bytes": 1041
+    },
+    "phase1/coverage_funnel.csv": {
+      "sha256": "6a9364eaeef0cbcea4693541511eed8d2aadbf7d309fcead7fae89da94237733",
+      "bytes": 231
+    },
+    "phase1/h2_sensitivity.csv": {
+      "sha256": "002c22fccf2477b2ec19dadfc19f0107a6a7651b54fce0f44c586d3c4837b1ee",
+      "bytes": 1103
+    },
+    "phase1/lineage_by_model.csv": {
+      "sha256": "575a2aa4b1b854c272afe55be919c44a6c31bc773a1cae7a8eeffb6ee5edfd41",
+      "bytes": 900910
+    },
+    "phase2/h2_tests.csv": {
+      "sha256": "21d093793d065e05c395b537b48e2095767e8128592866877fc77dcf7f1d88b3",
+      "bytes": 990
+    },
+    "phase2/placebo.csv": {
+      "sha256": "374035c67e11237460f57360a313a5045728fb91388633aba1d23cfe7778b850",
+      "bytes": 3910
+    },
+    "phase2/summary_phase2.json": {
+      "sha256": "1ebb41452cbb9ee71e76c71ad01ca21ecffe8636d23a35b9538fdd175eaefbdf",
+      "bytes": 3509
+    },
+    "phase3/merge_pairs_v1.csv": {
+      "sha256": "fe71d05e518dcae764c4c29676c915b750cbab09cc69ab10be773a6e261dc2cc",
+      "bytes": 264110
+    },
+    "phase3/merge_pairs_v2.csv": {
+      "sha256": "e7e6e1d123fbdfd5feff6e49d75d2ae5ad10c3dec344b65fe62910be7a823490",
+      "bytes": 315596
+    },
+    "phase3/per_task_bonus.csv": {
+      "sha256": "009ba2f427626b3115f39edd663b5ce7608d5c6638c8be659711c3ca66122dfd",
+      "bytes": 1257
+    },
+    "phase3/summary_phase3.json": {
+      "sha256": "6063f6dea80aeca0c9245385d0443b8c81fe82a22de546a7b6ad7095e3ade606",
+      "bytes": 7830
+    },
+    "phase4/eval_status.csv": {
+      "sha256": "9d03061ae1ebed81e86dbc86fab128874c09f59ca78628c38d6513cebe1e7734",
+      "bytes": 175
+    },
+    "phase4/memorisation_by_model.csv": {
+      "sha256": "6e37cf2d663d821ee113276cf860d81a301d38a9cd63b7e04f7cd3f8e3ba7ca5",
+      "bytes": 2861
+    },
+    "phase4/models.csv": {
+      "sha256": "a175c9dd7c14b50b4ff2b22325e0aac231f522a9f1cdd1188d75ff22bd38968c",
+      "bytes": 27760
+    },
+    "phase4/proxy_validation.csv": {
+      "sha256": "a815c5a4242c36d9d456ac0c2bce4043694fec46f65f717046c807750b788011",
+      "bytes": 1011
+    },
+    "phase4/summary_phase4.json": {
+      "sha256": "ca6e90ec254f518300c873207031582ec5994fed13149f7d1505cb41807b3ae8",
+      "bytes": 2475
+    },
+    "phase5/robustness.csv": {
+      "sha256": "3b3c9d2098245f693dd7054e1e255009b3dacad62e1b7f6fede510794adef3fc",
+      "bytes": 2146
+    },
+    "phase5/summary_phase5.json": {
+      "sha256": "55ab4cfa0948031827b426261aa3a4ad538616ce60792335221c42a0038030f4",
+      "bytes": 1068
+    },
+    "phase4/preds/": {
+      "sha256": "7cf285e6b172f73a4964b8f32d8f1f060df5b101c7116394f936996d1c53352c",
+      "n_files": 5
+    }
+  }
+}

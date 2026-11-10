@@ -29,6 +29,9 @@ Hugging Face Hub. We ask whether benchmark contamination is *inherited* along th
 | `phase4_eval.py` | Runs models on original GSM8K questions vs GSM-Symbolic / GSM-Plus versions of the same questions (GPU) |
 | `phase4_colab.ipynb` | Colab / Kaggle notebook that runs `phase4_eval.py` with vLLM and saves to Google Drive |
 | `phase4_analyze.py` | Memorisation drop per model and its correlation with each inflation proxy |
+| `phase5_robust.py` | Robustness: h² of inflation under other kinship, proxy and sample choices, and leaving out each large family |
+| `make_manifest.py` | Data freeze: SHA-256 of every result file plus package versions (`out_phase1/MANIFEST.json`) |
+| `run_all.ps1` | Reruns every offline analysis (Parts 2, Phases 1–5, manifest) from the cached data in one command |
 
 ## Run (Windows)
 
@@ -57,6 +60,15 @@ The memorisation test runs models, so it needs a GPU. Model selection is already
   .venv\Scripts\python phase4_eval.py --tiers local --backend hf --batch 8
   .venv\Scripts\python phase4_analyze.py
   ```
+
+### Reproduce every result (offline, no GPU)
+
+```
+powershell -ExecutionPolicy Bypass -File run_all.ps1
+```
+
+This reruns Part 2 and Phases 1–5 from `out_phase1/data` and rewrites `out_phase1/MANIFEST.json`.
+On our machine the rerun reproduced every committed result file byte for byte.
 
 Part 1 resumes from its cache in `<out>/data` and can take up to an hour on a fresh run because of
 Hub rate limits. Parts 2 and the audit run offline in a few minutes.
@@ -93,6 +105,23 @@ Models: Qwen2-0.5B, Qwen1.5-0.5B, TinyLlama-Cinder-Agent, Qwen2-1.5B, StableLM-2
 | Do models do worse when only the numbers change? | Yes, every model: 8–15 points lower on re-numbered questions (mean 7.8 points over symbolic and number-substitution); bootstrap CI excludes 0 for 4 of 5 |
 | Is that just harder wording? | No: reworded questions with the original numbers cost only 1 point on average, so the drop is tied to the specific numbers, which is the memorisation pattern |
 | Does the inflation proxy predict which models memorise more? | Not testable yet: with 5 models no correlation is significant (all p > 0.13). About 20+ models with relatives in the panel are needed; `phase4_select.py` lists 47 such models in the 7–8B tier for a Kaggle run |
+
+### Phase 5: robustness (figure `out_phase1/phase5/figs/P5_robustness.png`)
+
+h² of inflation was re-estimated under 12 alternative choices (24 fits). All 24 are significant
+(p < 0.01).
+
+| Check | Raw gap h² | Residual gap h² |
+|---|---|---|
+| Baseline (clonal kinship, n = 405) | 0.52 [0.28, 0.72] | 0.62 [0.39, 0.79] |
+| Diploid kinship | 0.79 | 0.82 |
+| Without merges (n = 380) / without MoE (n = 374) | 0.50 / 0.46 | 0.61 / 0.58 |
+| Smaller / larger half of models by size | 0.53 / 0.53 | 0.57 / 0.70 |
+| Leaving out each of the 5 largest families | 0.47–0.57 | 0.58–0.71 |
+| Residual fit linear / quintic instead of cubic | — | 0.58 / 0.69 |
+
+No single family, model type or modelling choice drives the result; the conservative clonal
+baseline is at the low end of the range.
 
 Lineage note: on the v2 leaderboard, the "Base Model" of most merges is the model itself tagged
 "(Merge)". Those are self-references, not parents, and are excluded.
