@@ -84,11 +84,11 @@ Hub rate limits. Parts 2 and the audit run offline in a few minutes.
 
 | Question | Result |
 |---|---|
-| Is inflation heritable? | h² = 0.52 [0.28, 0.72], permutation p = 0.015 |
+| Is inflation heritable? | h² = 0.52 [0.28, 0.72], permutation p = 0.004 (1,000 shuffles, clonal kinship) |
 | Is the lineage data good enough? | 99 of 405 panel models (24%) have documented parents; 127 have a relative in the panel (569 related pairs). Restricted to those, h² of inflation stays 0.52 while capability drops to 0.20. |
 | Is it just capability? | Residual inflation is uncorrelated with capability (ρ = 0.02) and still heritable (h² = 0.62); genetic correlation with capability r_g = −0.14 [−0.38, 0.34] |
 | Placebo: are ordinary skill gaps as heritable? | No. 0 of 20 clean-vs-clean averaged gaps reach the contamination gap's h² (placebo median 0.22) |
-| Does family predict inflation? | CV R² 0.23 with the pedigree vs 0.17 covariates only; detector AUC 0.71 |
+| Does family predict inflation? | CV R² 0.19 with the pedigree vs 0.15 covariates only; detector AUC 0.69 vs 0.66 (mean of 20 repeated 5-fold splits; the pedigree wins in all 20) |
 | Are merges additive? | Yes, roughly: a typical merge sits at its parents' average on both leaderboards (median difference +0.5 on v1, +0.2 on v2; slope 0.91 / 0.88) |
 | Does merging compound contamination? | Weakly. At matched parent rank and without broken merges, merges keep +2.3 [0.6, 4.0] percentile points more of their parents' standing on contaminated v1 than on clean v2 (p = 0.008). The larger raw gap (+5.6) is mostly 23 broken merges that collapse on v2's generative tasks. |
 | Is the merge gain concentrated on GSM8K / TruthfulQA? | No clear evidence: TruthfulQA +0.9 [−0.0, 1.7], GSM8K −0.3 [−1.7, 1.0] |
@@ -118,8 +118,11 @@ h² of inflation was re-estimated under 12 alternative choices (24 fits). All 24
 | Without merges (n = 380) / without MoE (n = 374) | 0.50 / 0.46 | 0.61 / 0.58 |
 | Smaller / larger half of models by size | 0.53 / 0.53 | 0.57 / 0.70 |
 | Leaving out each of the 5 largest families | 0.47–0.57 | 0.58–0.71 |
+| Creator fixed effects (are relatives alike only because one person made them?) | 0.50 [0.15, 0.74] | 0.53 [0.21, 0.76] |
 | Residual fit linear / quintic instead of cubic | — | 0.58 / 0.69 |
 
+94% of related pairs in the panel were uploaded by different creators, and a fixed effect per creator
+leaves h² almost unchanged, so the result is not "same author, same habits".
 No single family, model type or modelling choice drives the result; the conservative clonal
 baseline is at the low end of the range.
 

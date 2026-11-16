@@ -51,5 +51,28 @@
     0.82
   ],
   "n_significant_p05": 24,
-  "n_fits": 24
+  "n_significant_p01": 24,
+  "max_p": 0.005462518451762901,
+  "n_fits": 24,
+  "creator_fixed_effects": {
+    "n_creators_with_2plus_models": 71,
+    "related_pairs": 524,
+    "share_related_pairs_different_creator": 0.9389312977099237,
+    "raw": {
+      "h2": 0.498,
+      "ci": [
+        0.15,
+        0.74
+      ],
+      "p_lrt": 0.0022911141742988556
+    },
+    "residual (cubic)": {
+      "h2": 0.532,
+      "ci": [
+        0.21,
+        0.76
+      ],
+      "p_lrt": 0.0007284347347982607
+    }
+  }
 }

@@ -93,7 +93,7 @@
       "n": 405
     }
   ],
-  "permutation_p_inflation": 0.014925373134328358,
+  "permutation_p_inflation": 0.003996003996003996,
   "inheritance": {
     "midparent_finetune": {
       "n": 53,
@@ -111,21 +111,52 @@
     }
   },
   "prediction": {
+    "cv_repeats": 20,
     "cv_r2": {
-      "Covariates only (size, arch, date, type)": 0.17230611638960192,
-      "Family mean (founder)": 0.08426134135843233,
-      "Pedigree BLUP + covariates": 0.22684772062224856
+      "Covariates only (size, arch, date, type)": 0.14507059750274895,
+      "Family mean (founder)": 0.06392117436332849,
+      "Pedigree BLUP + covariates": 0.1912041184455963
+    },
+    "cv_r2_range90": {
+      "Covariates only (size, arch, date, type)": [
+        0.12566271832335535,
+        0.16248509763982674
+      ],
+      "Family mean (founder)": [
+        0.039225906088738494,
+        0.08554372477630003
+      ],
+      "Pedigree BLUP + covariates": [
+        0.16953518102943838,
+        0.21212131759936773
+      ]
     },
     "cv_spearman": {
-      "Covariates only (size, arch, date, type)": 0.3499460937249344,
-      "Family mean (founder)": 0.13445050632911265,
-      "Pedigree BLUP + covariates": 0.4265851308286419
+      "Covariates only (size, arch, date, type)": 0.32533527146249713,
+      "Family mean (founder)": 0.12697039996358037,
+      "Pedigree BLUP + covariates": 0.38832633358594254
     },
     "detector_auc": {
-      "Covariates only (size, arch, date, type)": 0.6614158497343411,
-      "Family mean (founder)": 0.5776584599266632,
-      "Pedigree BLUP + covariates": 0.7053431115767419
+      "Covariates only (size, arch, date, type)": 0.6551448028137395,
+      "Family mean (founder)": 0.5616104168225697,
+      "Pedigree BLUP + covariates": 0.6886458878994238
     },
+    "detector_auc_range90": {
+      "Covariates only (size, arch, date, type)": [
+        0.6492582129761281,
+        0.6640546658684428
+      ],
+      "Family mean (founder)": [
+        0.5220599790466213,
+        0.5950871810222256
+      ],
+      "Pedigree BLUP + covariates": [
+        0.678733256005388,
+        0.7016397889695429
+      ]
+    },
+    "pedigree_beats_covariates_r2_share": 1.0,
+    "pedigree_beats_covariates_auc_share": 1.0,
     "subproxy_spearman": 0.08786983436882896
   }
 }

@@ -198,8 +198,8 @@ def part2(panel, edges, figdir, n_perm, rng):
             print(f"   {t:15s} h2={m.h2:.3f} [{m.ci[0]:.2f},{m.ci[1]:.2f}] p={m.p_lrt:.2g}")
     res = pd.DataFrame(res)
 
-    # permutation null for the headline trait (diploid)
-    m, _ = models[("diploid", "inflation")]
+    # permutation null for the headline trait under the primary (clonal, conservative) kinship
+    m, _ = models[("clonal", "inflation")]
     null = m.perm_h2(X.values, n_perm, rng)
     p_perm = (1 + (null >= m.h2).sum()) / (1 + n_perm)
 
@@ -238,7 +238,7 @@ def part2(panel, edges, figdir, n_perm, rng):
             alpha=.6, label=f"shuffled labels (n={n_perm})")
     ax.axvline(m.h2, color=C["orange"], lw=2.5, label=f"observed ĥ² = {m.h2:.2f}")
     ax.set_xlabel("h² of inflation"); ax.set_ylabel("count")
-    ax.set_title(f"Permutation test (p = {p_perm:.3f})"); ax.legend()
+    ax.set_title(f"Permutation test, clonal kinship (p = {p_perm:.3f})"); ax.legend()
     fig.savefig(f"{figdir}/10_permutation_null.png"); plt.close(fig)
     return res, p_perm, X, models
 
@@ -333,51 +333,68 @@ def gp_predict(A, y, X, tr, te, h2):
     return X[te] @ b + A[np.ix_(te, tr)] @ alpha, X[te] @ b
 
 
-def part4(panel, models, X, figdir, rng, folds=5):
+def part4(panel, models, X, figdir, rng, folds=5, reps=20, seed=1):
+    """Lineage-only prediction. One random 5-fold split is noisy, so the CV is repeated over
+    `reps` fold assignments drawn from its own generator (independent of the permutation test);
+    we report the mean and the 5th-95th percentile range across repeats."""
+    from sklearn.metrics import roc_curve, roc_auc_score
     out = {}
     y = panel.inflation.values.astype(float)
     m, A = models[("diploid", "inflation")]
     Xv = X.values
     fam = panel.founder.values
-    k = rng.permutation(len(y)) % folds
-    pred = {"Covariates only\n(size, arch, date, type)": np.zeros_like(y),
-            "Family mean\n(founder)": np.zeros_like(y),
-            "Pedigree BLUP\n+ covariates": np.zeros_like(y)}
-    keys = list(pred)
-    for f in range(folds):
-        tr, te = np.where(k != f)[0], np.where(k == f)[0]
-        # refit h2 on training fold only (no leakage)
-        sub = AnimalModel(A[np.ix_(tr, tr)])
-        yt = (y[tr] - y[tr].mean()) / y[tr].std()
-        h2 = sub.fit(yt, Xv[tr]).h2
-        blup, cov = gp_predict(A, y, Xv, tr, te, h2)
-        pred[keys[2]][te], pred[keys[0]][te] = blup, cov
-        fm = pd.Series(y[tr]).groupby(fam[tr]).mean()
-        pred[keys[1]][te] = pd.Series(fam[te]).map(fm).fillna(y[tr].mean()).values
-    r2 = {kk: 1 - ((y - p) ** 2).sum() / ((y - y.mean()) ** 2).sum() for kk, p in pred.items()}
-    rho = {kk: stats.spearmanr(y, p).correlation for kk, p in pred.items()}
-    out["cv_r2"] = {kk.replace("\n", " "): v for kk, v in r2.items()}
-    out["cv_spearman"] = {kk.replace("\n", " "): v for kk, v in rho.items()}
+    lab = (y >= np.quantile(y, .8)).astype(int)        # detector target: top-20% inflation
+    keys = ["Covariates only\n(size, arch, date, type)", "Family mean\n(founder)", "Pedigree BLUP\n+ covariates"]
+    cv_rng = np.random.default_rng(seed)
+    r2s, rhos, aucs = {kk: [] for kk in keys}, {kk: [] for kk in keys}, {kk: [] for kk in keys}
+    pred_sum = {kk: np.zeros_like(y) for kk in keys}
+    for _ in range(reps):
+        k = cv_rng.permutation(len(y)) % folds
+        pred = {kk: np.zeros_like(y) for kk in keys}
+        for f in range(folds):
+            tr, te = np.where(k != f)[0], np.where(k == f)[0]
+            # refit h2 on training fold only (no leakage)
+            sub = AnimalModel(A[np.ix_(tr, tr)])
+            yt = (y[tr] - y[tr].mean()) / y[tr].std()
+            h2 = sub.fit(yt, Xv[tr]).h2
+            blup, cov = gp_predict(A, y, Xv, tr, te, h2)
+            pred[keys[2]][te], pred[keys[0]][te] = blup, cov
+            fm = pd.Series(y[tr]).groupby(fam[tr]).mean()
+            pred[keys[1]][te] = pd.Series(fam[te]).map(fm).fillna(y[tr].mean()).values
+        for kk, p in pred.items():
+            r2s[kk].append(1 - ((y - p) ** 2).sum() / ((y - y.mean()) ** 2).sum())
+            rhos[kk].append(stats.spearmanr(y, p).correlation)
+            aucs[kk].append(roc_auc_score(lab, p))
+            pred_sum[kk] += p / reps
+    mean = lambda d: {kk.replace("\n", " "): float(np.mean(v)) for kk, v in d.items()}
+    rng90 = lambda d: {kk.replace("\n", " "): [float(np.percentile(v, 5)), float(np.percentile(v, 95))] for kk, v in d.items()}
+    out["cv_repeats"] = reps
+    out["cv_r2"], out["cv_r2_range90"] = mean(r2s), rng90(r2s)
+    out["cv_spearman"] = mean(rhos)
+    out["detector_auc"], out["detector_auc_range90"] = mean(aucs), rng90(aucs)
+    out["pedigree_beats_covariates_r2_share"] = float(np.mean(np.array(r2s[keys[2]]) > np.array(r2s[keys[0]])))
+    out["pedigree_beats_covariates_auc_share"] = float(np.mean(np.array(aucs[keys[2]]) > np.array(aucs[keys[0]])))
+    r2 = {kk: np.mean(v) for kk, v in r2s.items()}
+    rho = {kk: np.mean(v) for kk, v in rhos.items()}
 
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
     cols = [C["ink2"], C["aqua"], C["orange"]]
-    ax.bar(range(3), [r2[kk] for kk in keys], color=cols, width=.55)
+    lo = [r2[kk] - np.percentile(r2s[kk], 5) for kk in keys]
+    hi = [np.percentile(r2s[kk], 95) - r2[kk] for kk in keys]
+    ax.bar(range(3), [r2[kk] for kk in keys], color=cols, width=.55, yerr=[lo, hi], capsize=4)
     for i, kk in enumerate(keys):
-        ax.text(i, r2[kk], f"R²={r2[kk]:.2f}\nρ={rho[kk]:.2f}", ha="center", va="bottom", fontsize=9)
+        ax.text(i + .3, r2[kk], f"R²={r2[kk]:.2f}\nρ={rho[kk]:.2f}", ha="left", va="center", fontsize=9)
     ax.set_xticks(range(3)); ax.set_xticklabels(keys, fontsize=9)
-    ax.set_ylabel(f"{folds}-fold CV R²"); ax.axhline(0, color=C["ink2"], lw=1)
+    ax.set_ylabel(f"{folds}-fold CV R² (mean of {reps})"); ax.axhline(0, color=C["ink2"], lw=1)
     ax.set_ylim(min(0, min(r2.values())) - .05, max(r2.values()) * 1.35 + .05)
     ax.set_title("Predicting a model's inflation without its scores"); ax.grid(axis="x", visible=False)
     fig.savefig(f"{figdir}/14_cv_prediction.png"); plt.close(fig)
 
-    # detector: flag top-20% inflation using held-out predictions
-    lab = (y >= np.quantile(y, .8)).astype(int)
-    from sklearn.metrics import roc_curve, roc_auc_score
+    # detector ROC from held-out predictions averaged over the repeats
     fig, ax = plt.subplots(figsize=(4.8, 4.6))
-    out["detector_auc"] = {}
     for kk, col in zip(keys, cols):
-        fpr, tpr, _ = roc_curve(lab, pred[kk]); auc = roc_auc_score(lab, pred[kk])
-        out["detector_auc"][kk.replace("\n", " ")] = auc
+        fpr, tpr, _ = roc_curve(lab, pred_sum[kk])
+        auc = out["detector_auc"][kk.replace("\n", " ")]
         ax.plot(fpr, tpr, color=col, lw=2, label=f"{kk.splitlines()[0]} (AUC {auc:.2f})")
     ax.plot([0, 1], [0, 1], color=C["grid"], ls="--")
     ax.set_xlabel("false positive rate"); ax.set_ylabel("true positive rate")
@@ -410,7 +427,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="out/data")
     ap.add_argument("--out", default="out")
-    ap.add_argument("--perm", type=int, default=200)
+    ap.add_argument("--perm", type=int, default=1000)
     ap.add_argument("--max-panel", type=int, default=6000,
                     help="subsample panel if larger (eigh is O(n^3))")
     ap.add_argument("--seed", type=int, default=0)

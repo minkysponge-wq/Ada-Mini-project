@@ -110,13 +110,40 @@ def main():
     ax.set_title("Inflation stays heritable under every alternative choice", loc="left")
     fig.tight_layout(); fig.savefig(f"{figdir}/P5_robustness.png"); plt.close(fig)
 
+    # same-creator confound: are relatives alike only because one person made them?
+    # Add a fixed effect for every creator (Hub namespace) with 2+ panel models.
+    creator = panel.model_id.str.split("/").str[0]
+    vc = creator.value_counts()
+    multi = vc[vc >= 2].index
+    dummies = pd.get_dummies(creator.where(creator.isin(multi), "_other"), drop_first=True).values.astype(float)
+    Xc = np.c_[design(panel).values, dummies]
+    Xc = Xc[:, np.r_[True, Xc[:, 1:].std(0) > 0]]
+    A, _ = kinship(panel.model_id.tolist(), edges, "clonal")
+    iu = np.triu_indices(len(panel), 1)
+    related = A[iu] > 0.01
+    diff_creator = creator.values[iu[0]] != creator.values[iu[1]]
+    cfe = {"n_creators_with_2plus_models": int(len(multi)),
+           "related_pairs": int(related.sum()),
+           "share_related_pairs_different_creator": float((related & diff_creator).sum() / related.sum())}
+    base = AnimalModel(A)
+    for plab, col in [("raw", "inflation"), ("residual (cubic)", "resid3")]:
+        m = AnimalModel.__new__(AnimalModel); m.s, m.U = base.s, base.U
+        m.fit(zfill(panel[col]), Xc)
+        cfe[plab] = {"h2": round(m.h2, 3), "ci": [round(m.ci[0], 3), round(m.ci[1], 3)], "p_lrt": float(m.p_lrt)}
+        print(f"[creator fixed effects] {plab:18s} h2={m.h2:.2f} [{m.ci[0]:.2f},{m.ci[1]:.2f}] p={m.p_lrt:.2g}")
+    print(f"[creator fixed effects] {cfe['share_related_pairs_different_creator']:.1%} of related pairs "
+          f"are by different creators")
+
     nb = res[res.check != "baseline"]
     summ = {"n_checks": int(res.check.nunique()),
             "baseline": base_rows.to_dict("records"),
             "raw_h2_range": [float(nb[nb.proxy == "raw"].h2.min()), float(nb[nb.proxy == "raw"].h2.max())],
             "residual_h2_range": [float(nb[nb.proxy == "residual (cubic)"].h2.min()),
                                   float(nb[nb.proxy == "residual (cubic)"].h2.max())],
-            "n_significant_p05": int((res.p_lrt < .05).sum()), "n_fits": int(len(res))}
+            "n_significant_p05": int((res.p_lrt < .05).sum()),
+            "n_significant_p01": int((res.p_lrt < .01).sum()), "max_p": float(res.p_lrt.max()),
+            "n_fits": int(len(res)),
+            "creator_fixed_effects": cfe}
     json.dump(summ, open(f"{odir}/summary_phase5.json", "w"), indent=2)
     print(json.dumps(summ, indent=2))
     print(f"[done] phase 5 in {odir}/")
