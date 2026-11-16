@@ -30,6 +30,6 @@ Built by `part1_pedigree.py` on 2026-11 from public sources; frozen in `out_phas
 
 | File | Contents |
 |---|---|
-| `models.csv` | 142 candidate models by GPU tier, with their inflation proxies and pedigree-predicted inflation |
+| `models.csv` | 106 candidate models by GPU tier (10 up to 2B, 16 more up to 4B, 80 more up to 8B), with their inflation proxies and pedigree-predicted inflation |
 | `preds/<model>.jsonl` | One line per question: item id, dataset, variant (original / symbolic / numerical substitution / problem understanding), gold answer, model answer, correct, raw output |
 | `memorisation_by_model.csv` | Accuracy on originals vs variants and the paired drop with bootstrap 95% CIs |
