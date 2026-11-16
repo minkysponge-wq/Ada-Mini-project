@@ -68,7 +68,12 @@ powershell -ExecutionPolicy Bypass -File run_all.ps1
 ```
 
 This reruns Part 2 and Phases 1–5 from `out_phase1/data` and rewrites `out_phase1/MANIFEST.json`.
-On our machine the rerun reproduced every committed result file byte for byte.
+On our machine the rerun reproduced every committed result file exactly. To check a clone or a rerun
+against the submitted results (works on any OS; line endings are normalised before hashing):
+
+```
+python make_manifest.py --out out_phase1 --check
+```
 
 Part 1 resumes from its cache in `<out>/data` and can take up to an hour on a fresh run because of
 Hub rate limits. Parts 2 and the audit run offline in a few minutes.
@@ -103,7 +108,7 @@ Models: Qwen2-0.5B, Qwen1.5-0.5B, TinyLlama-Cinder-Agent, Qwen2-1.5B, StableLM-2
 |---|---|
 | Does the harness measure what the leaderboard measures? | Yes: our original-question accuracy ranks the models like the leaderboard's GSM8K (Spearman 0.90) |
 | Do models do worse when only the numbers change? | Yes, every model: 8–15 points lower on re-numbered questions (mean 7.8 points over symbolic and number-substitution); bootstrap CI excludes 0 for 4 of 5 |
-| Is that just harder wording? | No: reworded questions with the original numbers cost only 1 point on average, so the drop is tied to the specific numbers, which is the memorisation pattern |
+| Is that just harder wording? | No: reworded questions with the original numbers cost only 1 point on average, so the drop is tied to the specific numbers, which is consistent with memorisation (small models may also find unfamiliar numbers harder) |
 | Does the inflation proxy predict which models memorise more? | Not testable yet: with 5 models no correlation is significant (all p > 0.13). About 20+ models with relatives in the panel are needed; `phase4_select.py` lists 47 such models in the 7–8B tier for a Kaggle run |
 
 ### Phase 5: robustness (figure `out_phase1/phase5/figs/P5_robustness.png`)
